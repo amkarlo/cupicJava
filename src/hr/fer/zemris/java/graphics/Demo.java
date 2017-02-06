@@ -5,6 +5,7 @@ import hr.fer.zemris.java.graphics.raster.BWRasterMem;
 import hr.fer.zemris.java.graphics.views.RasterView;
 import hr.fer.zemris.java.graphics.views.SimpleRasterView;
 import hr.fer.zemris.java.tecaj.hw1.Main;
+import org.w3c.dom.css.Rect;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -25,15 +26,10 @@ public class Demo {
     private static Map<String, Class<?>> shapeMap = new HashMap<String, Class<?>>() {
         {
             put("FLIP", null);
-            try {
-                put("RECTANGLE", Class.forName("hr.fer.zemris.java.graphics.Rectangle"));
-                put("SQUARE", Class.forName("hr.fer.zemris.java.graphics.Square"));
-                put("ELLIPSE", Class.forName("hr.fer.zemris.java.graphics.Ellipse"));
-                put("CIRCLE", Class.forName("hr.fer.zemris.java.graphics.Circle"));
-            }
-            catch (ClassNotFoundException e) {
-                e.getMessage();
-            }
+            put("RECTANGLE", Rectangle.class);
+            put("SQUARE", Square.class);
+            put("ELLIPSE", Ellipse.class);
+            put("CIRCLE", Circle.class);
         }
     };
 
