@@ -106,7 +106,7 @@ public class SimpleHashtable<K,V> implements Iterable<SimpleHashtable.TableEntry
         public boolean hasNext() {
             if(itModCount != modificationCount)
                 throw new ConcurrentModificationException();
-            if (position < size)
+            if (position < (size-1))
                 return true;
             return false;
         }
@@ -198,10 +198,15 @@ public class SimpleHashtable<K,V> implements Iterable<SimpleHashtable.TableEntry
             resize();
             iterator = getIterator(key);
         }
-        while (iterator.next != null) {
-            iterator = iterator.next;
+        if (iterator == null)
+            iterator = new TableEntry(key, value);
+        else{
+            while (iterator.next != null) {
+                iterator = iterator.next;
+            }
+            iterator.next = new TableEntry(key, value);
         }
-        iterator.next = new TableEntry(key, value);
+
         ++size;
         ++modificationCount;
     }

@@ -10,9 +10,31 @@ public class StudentRecord {
     private int finalGrade;
 
     StudentRecord(String[] data){
-        this.jmbag = data[0];
-        this.lastName = data[1];
-        this.firstName = data[2];
-        this.finalGrade = Integer.parseInt(data[3]);
+        jmbag = data[0];
+        lastName = data[1];
+        firstName = data[2];
+        finalGrade = Integer.parseInt(data[3]);
+    }
+
+    public String getJmbag() {
+        return jmbag;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public int getFinalGrade() {
+        return finalGrade;
+    }
+
+    public String toString(){
+        String student = "";
+        student = jmbag + " " + lastName + " " + firstName + " " + String.valueOf(finalGrade);
+        return student;
     }
 }
