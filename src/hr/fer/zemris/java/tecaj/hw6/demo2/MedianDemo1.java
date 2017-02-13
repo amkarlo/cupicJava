@@ -5,7 +5,7 @@ import java.util.Optional;
 /**
  * Created by akarlovic on 13.2.2017..
  */
-public class MedianDemo {
+public class MedianDemo1 {
     public static void main(String[] args){
         LikeMedian<Integer> likeMedian = new  LikeMedian<Integer>();
         likeMedian.add(new Integer(10));

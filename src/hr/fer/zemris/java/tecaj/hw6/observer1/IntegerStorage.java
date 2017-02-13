@@ -1,6 +1,5 @@
-package hr.fer.zemris.java.tecaj.hw5.hw6.observer1;
+package hr.fer.zemris.java.tecaj.hw6.observer1;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

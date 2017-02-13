@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.tecaj.hw6.observer1;
+package hr.fer.zemris.java.tecaj.hw6.observer2;
 
 /**
  * Created by akarlovic on 13.2.2017..
@@ -11,7 +11,7 @@ public class ChangeCounter implements IntegerStorageObserver {
     }
 
     @Override
-    public void valueChanged(IntegerStorage istorage) {
+    public void valueChanged(IntegerStorageChange istorage) {
         ++counter;
         System.out.println("Number of value changes since tracking: " + String.valueOf(counter));
     }
