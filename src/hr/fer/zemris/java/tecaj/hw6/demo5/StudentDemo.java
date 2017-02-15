@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,12 +50,67 @@ public class StudentDemo {
         }
         System.out.println();
 
-        Comparator<StudentRecord> poBrojuBodova = (e1, e2) -> Double.compare(
-                (e1.getMedjuispit() + e1.getZavrsni() + e1.getVjezbe()),
-                (e2.getMedjuispit() + e2.getZavrsni() + e2.getVjezbe()));
         List<StudentRecord> odlikasiSortirano = records.stream()
                                 .filter(studentRecord -> studentRecord.getOcjena() == 5)
-                                .sorted(poBrojuBodova)
+                                .sorted((e1, e2) -> Double.compare(
+                                            (e1.getMedjuispit() + e1.getZavrsni() + e1.getVjezbe()),
+                                            (e2.getMedjuispit() + e2.getZavrsni() + e2.getVjezbe())))
                                 .collect(Collectors.toList());
+
+        for (StudentRecord student : odlikasiSortirano) {
+            System.out.println(student.toString());
+        }
+        System.out.println();
+
+        List<String> nepolozeniJMBAGovi = records.stream()
+                                        .filter(studentRecord -> studentRecord.getOcjena() == 1)
+                                        .sorted((e1, e2) -> Integer.compare(Integer.parseInt(e1.getJmbag()), Integer.parseInt(e2.getJmbag())))
+                                        .map(studentRecord -> studentRecord.getJmbag())
+                                        .collect(Collectors.toList());
+
+//        for (String jmbag : nepolozeniJMBAGovi) {
+//            System.out.println(jmbag);
+//        }
+        System.out.println(String.valueOf(nepolozeniJMBAGovi.size()));
+        System.out.println();
+
+        Map<Integer, List<StudentRecord>> mapaPoOcjenama = records.stream()
+                                                .collect(Collectors.groupingBy(StudentRecord::getOcjena));
+
+//        for (Map.Entry<Integer, List<StudentRecord>> entry : mapaPoOcjenama.entrySet())
+//        {
+//            System.out.print(entry.getKey() + ": [");
+//            List<StudentRecord> students = entry.getValue();
+//            for (StudentRecord student : students){
+//                if (students.indexOf(student) == (students.size()-1))
+//                    System.out.println(student.getJmbag() + "]");
+//                else
+//                    System.out.print(student.getJmbag() + ",");
+//            }
+//        }
+
+        System.out.println();
+
+//        Collector<T, ?, Map<K,U>> toMap(Function<? super T, ? extends K> keyMapper,
+//                Function<? super T, ? extends U> valueMapper,
+//                BinaryOperator<U> mergeFunction)
+        Map<Integer, Integer> mapaPoOcjenama2 = records.stream()
+                                  .collect(Collectors.toMap(StudentRecord::getOcjena, s -> 1, (s, a) -> ++s
+                                  ));
+
+        for (Map.Entry<Integer, Integer> entry : mapaPoOcjenama2.entrySet())
+        {
+            System.out.println(String.valueOf(entry.getKey()) + " : " + String.valueOf(entry.getValue()));
+        }
+        System.out.println();
+
+        Map<Boolean, List<StudentRecord>> prolazNeprolaz = records.stream()
+                                    .collect(Collectors.partitioningBy(s -> s.getOcjena() > 1));
+
+        for (Map.Entry<Boolean, List<StudentRecord>> entry : prolazNeprolaz.entrySet())
+        {
+            System.out.println(entry.getKey() + " : " + String.valueOf(entry.getValue().size()));;
+        }
+        System.out.println();
     }
 }

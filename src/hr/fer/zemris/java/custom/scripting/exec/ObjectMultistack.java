@@ -25,7 +25,7 @@ public class ObjectMultistack {
 
     private MultistackEntry iterateToLast(String name){
         MultistackEntry node = objectMap.get(name);
-        while(node.next.next != null)
+        while(node.next != null && node.next.next != null)
             node = node.next;
         return node;
     }
@@ -48,8 +48,13 @@ public class ObjectMultistack {
 
         MultistackEntry node = iterateToLast(name);
 
-        ValueWrapper value = node.next.value;
-        node.next = null;
+        ValueWrapper value;
+        if (node.next != null) {
+            value = node.next.value;
+            node.next = null;
+        }
+        else
+            value = node.value;
         return value;
     }
 
@@ -59,7 +64,9 @@ public class ObjectMultistack {
 
         MultistackEntry node = iterateToLast(name);
 
-        return node.next.value;
+        if (node.next != null)
+            return node.next.value;
+        return node.value;
     }
 
     public boolean isEmpty(String name) {
